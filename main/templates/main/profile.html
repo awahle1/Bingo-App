@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'boards.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row" id = "sitename">
+        <div class="col-sm">
+          <h1>BINGO!</h1>
+        </div>
+      </div>
+      <div class="row" id="navbar">
+        <div class="col-sm">
+          <a class="my" href="{% url 'boards' %}">My Boards</a>
+        </div>
+        <div class="col-sm">
+          <a class="my" href="{% url 'showbingos' %}">My Bingos</a>
+        </div>
+        <div class="col-sm">
+          <a class="my" href="{% url 'boardmaker' %}">+</a>
+        </div>
+        <div class="col-sm">
+          <a class="my" href="{% url 'logout' %}">Logout</a>
+        </div>
+        <div class="col-sm">
+          <a class="my" href="{% url 'feed' %}">Feed</a>
+        </div>
+        <div class="col-sm">
+          <a class="my" href="{% url 'search' %}">Search</a>
+        </div>
+      </div>
+      <div class="row" id = "username">
+        <div class="col-sm">
+          <h2>{{user.username}}</h2>
+        </div>
+      </div>
+    </div>
+    <center>
+      {% block body %}
+      {% endblock %}
+    </center>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+{% extends "main/base.html" %}
+  {% block head %}
+    <script type="text/javascript">
+      function isFollowing() {
+        var name = (document.getElementById("idusername")).innerHTML
+        $.ajax({
+          type: "POST",
+          url: "/isfollowing",
+          dataType: "json",
+          data: JSON.stringify({ "name":name }),
+          success: function(data) {
+            console.log(data["following"]);
+              if(data["following"]){
+                console.log(document.getElementsByClassName("container-fluid"));
+                document.getElementById("followbutton").innerHTML = "Unfollow";
+              }
+              else{
+                console.log(document.getElementsByClassName("container-fluid"));
+                document.getElementById("followbutton").innerHTML = "Follow";
+              }
+          }
+        });
+      };
+    function follow(self) {
+      $.ajax({
+        type: "POST",
+        url: "/follow",
+        dataType: "json",
+        data: JSON.stringify({ "id":self.name }),
+        success: function(data) {
+          if(data["following"]){
+            document.getElementById("followbutton").innerHTML = "Unfollow";
+          }
+          else{
+            document.getElementById("followbutton").innerHTML = "Follow";
+          }
+        }
+      });
+    };
+    $(document).ready(function(){
+      function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+      });
+      isFollowing();
+    });
+    </script>
+    {% block script %}{% endblock %}
+    {% endblock %}
+{% block content %}
+  <body>
+    <div class="container-fluid">
+        <div class="row" id = "sitename">
+          <div class="col-sm">
+            <h1>BINGO!</h1>
+          </div>
+        </div>
+        <div class="row" id = "usernamebar">
+          <div class="col-sm" id="userusername">
+              <h2 id="idusername">{{user.username}}</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm" id="userfollowbutton">
+            <button class="btn btn-info" type="button" id="followbutton" name="{{user.id}}" onclick="follow(this)"></button>
+          </div>
+        </div>
+        <div class="row" id = "usernavbar">
+          <div class="col-sm">
+            <a class="user" href="http://127.0.0.1:8000/boards/{{user.username}}">{{user.username}}'s Boards</a>
+          </div>
+          <div class="col-sm">
+            <a class="user" href="http://127.0.0.1:8000/bingos/{{user.username}}">{{user.username}}'s Bingos</a>
+          </div>
+            <div class="col-sm">
+              <a class="user" href="{% url 'boards' %}">My Profile</a>
+            </div>
+        </div>
+      </div>
+    <center>{% block body %}{% endblock %}</center>
+  </body>
+{% endblock %}

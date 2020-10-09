@@ -1,0 +1,112 @@
+{% extends 'main/searchbase.html' %}
+{% block script %}
+  <script type="text/javascript">
+    function getBingos(self) {
+      var id = self.name
+      $.ajax({
+        type: "POST",
+        url: "/getuserbingos",
+        dataType: "json",
+        data: JSON.stringify({ "id":self.name }),
+        success: function(data) {
+          var spaces = data['item'];
+          var table = document.getElementById(id);
+          console.log(table);
+          var datas = []
+          var rows = table.getElementsByTagName("TR");
+          for(let i = 0; i<rows.length; i++){
+            datas.push(rows[i].getElementsByTagName("TD"))
+          };
+          for(let i = 0; i<datas.length; i++){
+            for(let j = 0; j<datas[i].length; j++){
+              button = (datas[i][j].getElementsByTagName("BUTTON"));
+              if (spaces.includes(button[0].name)){
+                button[0].style.background = "#147EFB";
+                button[0].style.color = "white";
+              }
+            };
+          };
+        }
+      });
+    };
+    function hideCompletion(self) {
+      var id = self.name
+      $.ajax({
+        type: "POST",
+        url: "/getuserbingos",
+        dataType: "json",
+        data: JSON.stringify({ "id":self.name }),
+        success: function(data) {
+          var spaces = data['item'];
+          var table = document.getElementById(id);
+          var datas = []
+          rows = table.getElementsByTagName("TR");
+          for(let i = 0; i<rows.length; i++){
+            datas.push(rows[i].getElementsByTagName("TD"))
+          };
+          for(let i = 0; i<datas.length; i++){
+            for(let j = 0; j<datas[i].length; j++){
+              button = (datas[i][j].getElementsByTagName("BUTTON"));
+              if (spaces.includes(button[0].name)){
+                button[0].style.background = "white";
+                button[0].style.color = "black";
+              }
+            };
+          };
+        }
+      });
+    };
+    $(document).ready(function(){
+      function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    });
+  </script>
+{% endblock %}
+{% block body %}
+  {% for board in boardlist %}
+  <div class="allboards">
+    <div class="wholeboard">
+      <h1>{{board.name}}</h1>
+      <table class="boards" id = "{{board.id}}">
+        {% for row in board.getInfo %}
+          <tr>
+            {% for item in row %}
+                <td><div class="square"><button class="button" type="{{board.id}}" onclick="alternate(this)" name="{{item}}">{{item}}</button> </div></td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </table>
+    <div class="bottombuttons">
+      <button class="btn btn-primary" type="button" name="{{board.id}}" onclick="getBingos(this)">Show Completed Version</button>
+      <button class="btn btn-danger" type="button" name="{{board.id}}" onclick="hideCompletion(this)">Hide Completion</button>
+    </div>
+  </div>
+</div>
+  {% endfor %}
+{% endblock %}

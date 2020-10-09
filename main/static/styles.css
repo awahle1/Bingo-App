@@ -1,0 +1,163 @@
+#bingo{
+  color: black;
+}
+#header{
+  color: blue;
+}
+#sitename{
+  width: 104%;
+  color: white;
+  background-color: #147EFB;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+#navbar div{
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background-color: #5bc0de;
+}
+#navbar a{
+  color: white;
+}
+#username{
+  width: 104%;
+  background-color: #b5d6fd;
+  color: white;
+}
+#usernavbar{
+  width: 104%;
+  background-color: #b5d6fd;
+}
+#userusername{
+  text-align: center;
+}
+#userfollowbutton{
+  text-align: center;
+  width: 104%;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+#usernamebar{
+  background-color: #5bc0de;
+}
+#followbutton{
+  width: 100%;
+  padding-left: 0px;
+  font-weight: bold;
+}
+.col-sm{
+  text-align: center;
+}
+.col-sm .my{
+  color: black;
+  font-size: 28px;
+  font-weight: bold;
+}
+.col-sm .user{
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#navbar div:hover{
+  background-color: #cee4fd;
+}
+#usernavbar div:hover{
+  background-color: #cee4fd;
+}
+.col-sm #my:hover {
+  color: black;
+  text-decoration: none;
+}
+.wholeboard{
+  width: 550px;
+  background: #d0d0e1;
+}
+#wholeboardmaker{
+  background: #d0d0e1;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 600px;
+}
+.allboards{
+  padding-top: 10px;
+}
+.bottombuttons{
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.wholeboard h1{
+  color: white;
+}
+.wholeboard label h1{
+  padding-top: 10px;
+  padding-bottom: 0px;
+}
+#idusername{
+  color: white;
+}
+td.td textarea{
+  overflow-wrap: break-word;
+  resize: none;
+}
+#freespace{
+  text-align: center;
+}
+#freespace h5{
+  font-weight: bold;
+  color: white;
+}
+#boardnameinput{
+  height: 40px;
+}
+#inputtable{
+  padding-left: : 10px;
+}
+.searchform{
+  padding-top: 10px;
+}
+#searchresults{
+  list-style: none;
+  padding-top: 10px;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+#searchquereydiv{
+  text-align: right;
+}
+#searchquerey{
+  width: 300px;
+}
+.searchuser{
+  color: black;
+}
+.logindiv{
+  text-align: center;
+  width: 100%;
+  background-color: #5bc0de;
+  padding-bottom: 3px;
+}
+.therest{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  background-color: #d0d0e1;
+}
+#loginform{
+  padding-bottom: 10px;
+}
+#loginform .formspace{
+  padding-bottom: 10px;
+}
+#login{
+  color: white;
+}
+.signup{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  background-color: #d0d0e1;
+}
+.buttons{
+  text-align: center;
+}

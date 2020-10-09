@@ -1,0 +1,31 @@
+
+{% extends "main/profile.html" %}
+  {% block body %}
+    <h3>{{message}}</h3>
+    <form action="{% url 'createBoard' %}" method="post">
+      {% csrf_token %}
+      <div class="allboards">
+        <div id = "wholeboardmaker" class="wholeboard">
+          <label for="boardname"><h1>Name: </h1></label>
+          <input id="boardnameinput" type="text" name="boardname">
+            <table id="inputtable">
+              {% for i in list %}
+              <tr>
+                {% for k in i%}
+                  {% if k != 12 %}
+                    <td class = "td"><textarea rows = "4" columns="5" max maxlength = "41" class="form-control" name="{{k}}"></textarea></td>
+                  {% endif %}
+                  {% if k == 12 %}
+                    <td id = "freespace"><h5>Free</h5> <input maxlength="100" name="{{k}}" type="hidden" value="Free"></td>
+                  {% endif %}
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </table>
+          <div class="bottombuttons">
+            <input type="submit" value="Create" class="btn btn-primary">
+          </div>
+        </div>
+      </div>
+    </form>
+  {% endblock %}

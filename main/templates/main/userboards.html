@@ -1,0 +1,97 @@
+{% extends "main/searchbase.html" %}
+{% block script %}
+<script type="text/javascript">
+  var boards = []
+  function alternate(self){
+    if (self.style.background != "white" && self.style.background != ""){
+      self.style.background = "white";
+      self.style.color = "black";
+      boards.splice(boards.indexOf(self.name), 1);
+    }
+    else{
+      self.style.background = "#147EFB";
+      self.style.color = "white";
+      boards.push(self.name);
+    }
+  }
+  function done(self) {
+    var name = self.name
+    $.ajax({
+      type: "POST",
+      url: "/bingo",
+      dataType: "json",
+      data: JSON.stringify({ "item": boards, "name": name }),
+      success: function(data) {
+        if (data["repeat"]){
+          for(let i=0; i<boards.length; i++){
+            document.getElementsByName(boards[i])[0].style.background = "white";
+            document.getElementsByName(boards[i])[0].style.color = "black";
+          }
+          alert("You may only fill out each board once")
+          boards = []
+        }
+        else{
+          for(let i=0; i<boards.length; i++){
+            document.getElementsByName(boards[i])[0].style.background = "white";
+            document.getElementsByName(boards[i])[0].style.color = "black";
+          }
+          boards = []
+        }
+      }
+    });
+  };
+
+$(document).ready(function(){
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+});
+</script>
+{% endblock %}
+{% block body %}
+  {{message}}
+  {% for board in names %}
+  <div class="allboards">
+    <div class="wholeboard">
+      <h1>{{board.name}}</h1>
+      <table class="boards">
+        {% for row in board.getInfo %}
+          <tr>
+            {% for item in row %}
+                <td><div class="square"><button class="button" type="button" onclick="alternate(this)" name="{{item}}">{{item}}</button> </div></td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </table>
+      <div class="bottombuttons">
+        <button class="btn btn-primary" type="button" name="{{board.name}}" onclick="done(this)">Done</button>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+{% endblock %}

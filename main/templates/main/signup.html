@@ -1,0 +1,33 @@
+{% extends "main/base.html" %}
+{% block content %}
+<div class="logindiv">
+  <h1 id="login">Sign Up</h1>
+</div>
+<div class="therest">
+    <form class="signup" action="{% url 'signUp' %}" method="post" id = "loginform">
+      {% csrf_token %}
+      <div class="formspace">
+        <input type="text" name="username"placeholder="Username"><br>
+      </div>
+      <div class="formspace">
+        <input type="password" name="password" placeholder="Password"><br>
+      </div>
+      <div class="formspace">
+        <input type="email" name="email" placeholder="Email"><br>
+      </div>
+      <div class="formspace">
+        <input type="text" name="firstName" placeholder="First Name"><br>
+      </div>
+      <div class="formspace">
+        <input type="text" name="lastName" placeholder="Last Name"><br>
+      </div>
+      <div class="formspace">
+        <input class="btn btn-primary" type="submit" name="submit">
+      </div>
+    </form>
+    {{ message }}
+    <div class="buttons">
+      <a class="btn btn-info" href="{% url 'index' %}">Already have an account? Sign in here</a>
+    </div>
+</div>
+{% endblock %}

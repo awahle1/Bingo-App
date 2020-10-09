@@ -1,0 +1,12 @@
+{% extends "main/search.html" %}
+
+{% block content %}
+<div class="searchbox">
+  <ul id="searchresults">
+    {% for profile in result %}
+      <li><a href="http://127.0.0.1:8000/boards/{{profile.username}}"><h3 class="searchuser">{{profile.username}}</h3></a></li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}
